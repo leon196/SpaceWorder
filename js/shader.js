@@ -57,19 +57,24 @@ PIXI.VelocityFilter = function() {
             'float dist = length(center);',
             
             // Displacement from noise
-            //vec2 uvAngle = vec2(uTime * 0.01, ratioAngle);//pixelate(vec2(0, angle / PI), vec2(128.0));
-            'vec2 uvAngle = pixelate(vec2(0, ratioAngle + uTimeElapsed * 0.1), vec2(1024));',
+            //'vec2 uvAngle = vec2(0.0, ratioAngle);',
+            'vec2 uvAngle = pixelate(vec2(uTimeElapsed * 0.1, ratioAngle), vec2(2048.0));',//pow(2.0, 4.0 + floor(8.0 * (1.0 - dist)))));',
+            //pixelate(vec2(0, angle / PI), vec2(128.0));
+            //'vec2 uvAngle = pixelate(vec2(0, ratioAngle + uTimeElapsed * 0.1), vec2(1024));',
             //uvAngle = pixelate(vec2(0, angle / PI), vec2(128.0));
-            'float offset = rand(uvAngle * 256.0) * radius + 0.35;',
+            'float offset = rand(uvAngle) * radius + 0.1;',
             
             // Displaced pixel color
-            'vec2 p = vec2(cos(angle), sin(angle)) * offset + vec2(0.5);',
+            'vec2 p = uTarget + vec2(cos(angle), sin(angle)) * offset;',// * (radius - rand(uvAngle) * 0.05) + uTarget;',
             
             // Apply displacement
-            'uv = mix(uv, p, step(offset, radius));',
+            'float displaced = step(offset, radius);',
+            'uv = mix(uv, p, displaced);',
             
             // Get color from texture
             'vec3 color = texture2D(uSampler, uv).rgb;',
+
+            //'color = mix(color, vec3(0.0), displaced);',
 
             'gl_FragColor = vec4(color, 1.0);',
         '}'

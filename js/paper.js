@@ -32,10 +32,9 @@ var Paper = function(sprite)
     	// Display
     	if (this.isWrited == false)
     	{
-    		this.scale.x = paperScaleMax * timeRatio;
-	        this.scale.y = paperScaleMax * timeRatio;
+    		this.scale.x = this.scale.y = paperScaleMax * timeRatio * 2.0;
 
-	        var distance = timeRatio * window.innerWidth;
+	        var distance = timeRatio * window.innerWidth * this.scale.y;
 			this.x = window.innerWidth * 0.5 + Math.cos(this.angle) * distance;
 			this.y = window.innerHeight * 0.5 + Math.sin(this.angle) * distance;
 

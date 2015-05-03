@@ -84,10 +84,10 @@ function onAssetsLoaded ()
     layerBackground.beginFill(0x000000);
     layerBackground.drawRect(0,0,window.innerWidth, window.innerHeight);
     backgroundFilter = new PIXI.BackgroundFilter();
-    layerBackground.filters = [backgroundFilter];
+    velocityFilter = new PIXI.VelocityFilter();
+    layerBackground.filters = [backgroundFilter];//, velocityFilter];
 
     //
-    velocityFilter = new PIXI.VelocityFilter();
 	stage.filters = [velocityFilter];
 
 	// Start Game Loop
